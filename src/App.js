@@ -10,9 +10,9 @@ export default function App() {
 	const getAuth = async () => {
 		try {
 			const response = await axios.get("/get-auth");
-			auth.setIsLogin(true);
 
-			auth.setUser(response.data.name);
+			auth.setIsLogin(true);
+			auth.setUser(response.data.user);
 		} catch (error) {
 			console.log(error);
 		}
