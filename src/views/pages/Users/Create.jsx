@@ -16,6 +16,7 @@ export default function Create() {
 			setUsers([...users, response.data]);
 			reset();
 			toast.success("Berhasil ditambahkan");
+			setIsOpen(!isOpen);
 		} catch (error) {
 			toast.error(error.response?.data.message);
 		}
@@ -65,7 +66,7 @@ export default function Create() {
 					</label>
 					<label className="input-group input-group-vertical">
 						<input
-							type="text"
+							type="password"
 							placeholder="Password"
 							className="input input-bordered"
 							{...register("password", { required: true })}
