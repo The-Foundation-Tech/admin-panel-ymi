@@ -3,7 +3,6 @@ import Home from "../views/pages/Home/Index";
 import Newsletter from "../views/pages/Newsletter/Index";
 import Users from "../views/pages/Users/Index";
 import Programs from "../views/pages/Programs/Index";
-import Settings from "../views/pages/Settings/Index";
 import MainLayout from "../views/layouts/MainLayout";
 import Create from "../views/pages/Newsletter/Create";
 import Login from "../views/pages/Auth/Login";
@@ -77,15 +76,6 @@ export default function Router() {
 						element={
 							<Authenticated>
 								<Programs />
-							</Authenticated>
-						}
-					/>
-
-					<Route
-						path="/settings"
-						element={
-							<Authenticated>
-								<Settings />
 							</Authenticated>
 						}
 					/>
