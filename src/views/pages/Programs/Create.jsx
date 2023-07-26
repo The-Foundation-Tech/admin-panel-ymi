@@ -2,6 +2,7 @@ import axios from "axios";
 import { useContext } from "react";
 import { useForm } from "react-hook-form";
 import { ProgramsContext } from "../../../context/ProgramsContext";
+import toast from "react-hot-toast";
 
 export default function Create() {
 	const { register, reset, handleSubmit } = useForm();
@@ -12,8 +13,9 @@ export default function Create() {
 			const response = await axios.post("/programs", data);
 			setPrograms([...programs, response.data]);
 			reset();
+			toast.success("Berhasil ditambahkan");
 		} catch (error) {
-			console.log(error.message);
+			toast.error(error.response?.data?.message);
 		}
 	};
 

@@ -3,10 +3,10 @@ import Modals from "../../components/Modal";
 import { useContext, useState } from "react";
 import axios from "axios";
 import { ProgramsContext } from "../../../context/ProgramsContext";
-import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 export default function Edit({ program }) {
-	const { register, handleSubmit } = useForm();
+	const { register, handleSubmit, reset } = useForm();
 	const { getPrograms } = useContext(ProgramsContext);
 	const [isOpen, setIsOpen] = useState(false);
 
@@ -15,8 +15,10 @@ export default function Edit({ program }) {
 			await axios.patch(`/programs/${program._id}`, data);
 			await getPrograms();
 			setIsOpen(!isOpen);
+			reset();
+			toast.success("Berhasil diubah");
 		} catch (error) {
-			console.log(error.message);
+			toast.error(error.response?.data?.message);
 		}
 	};
 

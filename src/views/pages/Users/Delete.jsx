@@ -1,7 +1,8 @@
 import { useContext, useState } from "react";
+import { UsersContext } from "../../../context/UsersContext";
+import { toast } from "react-hot-toast";
 import Confirm from "../../components/Confirm";
 import axios from "axios";
-import { UsersContext } from "../../../context/UsersContext";
 
 export default function Delete({ user, modalID }) {
 	const [isOpen, setIsOpen] = useState(false);
@@ -11,8 +12,9 @@ export default function Delete({ user, modalID }) {
 		try {
 			await axios.delete(`/users/${user._id}`);
 			setUsers(users.filter((selected) => user._id !== selected._id));
+			toast.success("Berhasil dihapus");
 		} catch (error) {
-			console.log(error.message);
+			toast.error(error.response?.data?.message);
 		}
 	};
 

@@ -3,9 +3,10 @@ import { useForm } from "react-hook-form";
 import Modals from "../../components/Modal";
 import { useContext, useState } from "react";
 import { UsersContext } from "../../../context/UsersContext";
+import toast from "react-hot-toast";
 
 export default function Edit({ user }) {
-	const { register, handleSubmit } = useForm();
+	const { register, handleSubmit, reset } = useForm();
 	const { getUsers } = useContext(UsersContext);
 	const [isOpen, setIsOpen] = useState(false);
 
@@ -14,8 +15,11 @@ export default function Edit({ user }) {
 			await axios.patch(`/users/${user._id}`, data);
 			await getUsers();
 			setIsOpen(!isOpen);
+			reset();
+			toast.success("Berhasil diupdate");
 		} catch (error) {
-			console.log(error.message);
+			reset();
+			toast.error(error.response?.data?.message);
 		}
 	};
 

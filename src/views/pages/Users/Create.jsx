@@ -2,6 +2,7 @@ import axios from "axios";
 import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { UsersContext } from "../../../context/UsersContext";
+import { toast } from "react-hot-toast";
 import Modals from "../../components/Modal";
 
 export default function Create() {
@@ -14,8 +15,9 @@ export default function Create() {
 			const response = await axios.post("/users", data);
 			setUsers([...users, response.data]);
 			reset();
+			toast.success("Berhasil ditambahkan");
 		} catch (error) {
-			console.log(error.message);
+			toast.error(error.response?.data.message);
 		}
 	};
 

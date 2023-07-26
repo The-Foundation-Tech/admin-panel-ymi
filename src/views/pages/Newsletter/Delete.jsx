@@ -1,7 +1,8 @@
 import { useContext, useState } from "react";
+import { NewsContext } from "../../../context/NewsContext";
+import { toast } from "react-hot-toast";
 import Confirm from "../../components/Confirm";
 import axios from "axios";
-import { NewsContext } from "../../../context/NewsContext";
 
 export default function Delete({ news }) {
 	const [isOpen, setIsOpen] = useState(false);
@@ -13,8 +14,10 @@ export default function Delete({ news }) {
 			setNewsletters(
 				newsletters.filter((selected) => news._id !== selected._id)
 			);
+
+			toast.success("Berhasil dihapus");
 		} catch (error) {
-			console.log(error.message);
+			toast.error(error.response?.data?.message);
 		}
 	};
 

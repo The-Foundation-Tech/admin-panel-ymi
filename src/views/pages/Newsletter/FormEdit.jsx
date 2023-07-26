@@ -3,6 +3,7 @@ import axios from "axios";
 import React, { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
+import { toast } from "react-hot-toast";
 
 export default function FormEdit() {
 	const [news, setNews] = useState(null);
@@ -17,7 +18,7 @@ export default function FormEdit() {
 			const response = await axios.get(`/newsletters/${id}`);
 			setNews(response.data);
 		} catch (error) {
-			console.log(error.response.data.message);
+			toast.error(error.response?.data?.message);
 		}
 	};
 
@@ -28,10 +29,10 @@ export default function FormEdit() {
 				data.slug = editorRef.current.getContent();
 			}
 			await axios.patch(`/newsletters/${id}`, data);
-
+			toast.success("Berhasil diupdate");
 			redirect("/newsletters");
 		} catch (error) {
-			console.log(error.message);
+			toast.error(error.response?.data?.message);
 		}
 	};
 

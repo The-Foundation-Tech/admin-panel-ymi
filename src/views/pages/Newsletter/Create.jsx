@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { Editor } from "@tinymce/tinymce-react";
 import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 export default function Create() {
 	const { register, handleSubmit, reset } = useForm();
@@ -18,9 +19,10 @@ export default function Create() {
 
 			await axios.post("/newsletters", data);
 			reset();
-			redirect("/newsletter");
+			toast.success("Berita berhasil ditambahkan");
+			redirect("/newsletters");
 		} catch (error) {
-			console.log(error.response.data.message);
+			toast.error(error.response?.data?.message);
 		}
 	};
 

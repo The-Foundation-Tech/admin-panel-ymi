@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "./context/AuthContext";
 import Router from "./routes/routes";
 import axios from "axios";
+import { Toaster } from "react-hot-toast";
 
 export default function App() {
 	const [mounted, setMounted] = useState(false);
@@ -107,6 +108,13 @@ export default function App() {
 	return (
 		<main className="flex h-screen overflow bg-base-200">
 			<Router />
+			<Toaster
+				position="top-center"
+				reverseOrder={false}
+				containerStyle={{
+					top: 80,
+				}}
+			/>
 		</main>
 	);
 }

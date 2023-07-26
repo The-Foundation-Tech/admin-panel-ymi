@@ -2,6 +2,7 @@ import { useContext, useState } from "react";
 import Confirm from "../../components/Confirm";
 import axios from "axios";
 import { ProgramsContext } from "../../../context/ProgramsContext";
+import toast from "react-hot-toast";
 
 export default function Delete({ program }) {
 	const [isOpen, setIsOpen] = useState(false);
@@ -13,8 +14,9 @@ export default function Delete({ program }) {
 			setPrograms(
 				programs.filter((selected) => program._id !== selected._id)
 			);
+			toast.success("Berhasil dihapus");
 		} catch (error) {
-			console.log(error.message);
+			toast.error(error.response?.data?.message);
 		}
 	};
 
