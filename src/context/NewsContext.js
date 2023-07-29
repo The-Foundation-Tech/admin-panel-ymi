@@ -1,27 +1,28 @@
 import axios from "axios";
 import { createContext, useEffect, useMemo, useState } from "react";
+import toast from "react-hot-toast";
 
 export const NewsContext = createContext();
 
 export const NewsProvider = ({ children }) => {
 	const [newsletters, setNewsletters] = useState([]);
-	const [newsletter, setNewsletter] = useState(null);
+	const [news, setNews] = useState(null);
 
 	const getNewsletters = async () => {
 		try {
 			const response = await axios.get("/newsletters");
 			setNewsletters(response.data);
 		} catch (error) {
-			console.log(error.message);
+			toast.error(error.response?.data?.message);
 		}
 	};
 
-	const getNewsletter = async (id) => {
+	const getNews = async (paramsID) => {
 		try {
-			const response = await axios.get(`/newsletters/${id}`);
-			setNewsletter(response.data);
+			const response = await axios.get(`/newsletters/${paramsID}`);
+			setNews(response.data);
 		} catch (error) {
-			console.log(error.message);
+			toast.error(error.response?.data?.message);
 		}
 	};
 
@@ -36,9 +37,9 @@ export const NewsProvider = ({ children }) => {
 					newsletters,
 					setNewsletters,
 					getNewsletters,
-					newsletter,
-					setNewsletter,
-					getNewsletter,
+					news,
+					setNews,
+					getNews,
 				}),
 				[newsletters]
 			)}

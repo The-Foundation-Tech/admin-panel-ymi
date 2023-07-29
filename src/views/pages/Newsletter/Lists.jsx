@@ -33,6 +33,15 @@ export default function Lists() {
 									<td className="">
 										<div className="flex items-center gap-x-4">
 											<NavLink
+												to={`/detail-news/${news._id}`}
+												className={
+													"px-4 py-1 bg-cyan-500 rounded text-white"
+												}
+											>
+												Detail
+											</NavLink>
+
+											<NavLink
 												to={`/edit-news/${news._id}`}
 												className={
 													"px-4 py-1 bg-green-500 rounded text-white"

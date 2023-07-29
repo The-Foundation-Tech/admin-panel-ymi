@@ -9,6 +9,7 @@ import Login from "../views/pages/Auth/Login";
 import Authenticated from "../middlewares/Authenticated";
 import Guest from "../middlewares/Guest";
 import Edit from "../views/pages/Newsletter/Edit";
+import Detail from "../views/pages/Newsletter/Detail";
 
 export default function Router() {
 	return (
@@ -58,6 +59,15 @@ export default function Router() {
 						element={
 							<Authenticated>
 								<Edit />
+							</Authenticated>
+						}
+					/>
+
+					<Route
+						path="/detail-news/:id"
+						element={
+							<Authenticated>
+								<Detail />
 							</Authenticated>
 						}
 					/>

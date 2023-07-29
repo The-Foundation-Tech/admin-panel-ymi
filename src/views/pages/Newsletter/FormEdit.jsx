@@ -1,6 +1,6 @@
-import { Editor } from "@tinymce/tinymce-react";
 import axios from "axios";
 import React, { useEffect, useRef, useState } from "react";
+import { Editor } from "@tinymce/tinymce-react";
 import { useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-hot-toast";
