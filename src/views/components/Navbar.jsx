@@ -9,12 +9,13 @@ export default function Navbar({ open, setOpen }) {
 
 	const signout = async () => {
 		try {
-			const response = await axios.post("/logout");
+			await axios.post("/logout");
+
 			localStorage.removeItem("token");
+			localStorage.removeItem("user");
+
 			auth.setIsLogin(false);
 			redirect("/login");
-
-			console.log(response.data.message);
 		} catch (error) {
 			console.log(error.message);
 		}

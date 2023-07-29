@@ -13,8 +13,10 @@ export default function Login() {
 		try {
 			const response = await axios.post("/login", data);
 
-			auth.setIsLogin(true);
+			localStorage.setItem("user", response.data.user);
 			localStorage.setItem("token", response.data.token);
+
+			auth.setIsLogin(true);
 			redirect("/");
 		} catch (error) {
 			console.log(error.response.data.message);

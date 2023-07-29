@@ -6,10 +6,10 @@ import Programs from "../views/pages/Programs/Index";
 import MainLayout from "../views/layouts/MainLayout";
 import Create from "../views/pages/Newsletter/Create";
 import Login from "../views/pages/Auth/Login";
-import Authenticated from "../middlewares/Authenticated";
-import Guest from "../middlewares/Guest";
 import Edit from "../views/pages/Newsletter/Edit";
 import Detail from "../views/pages/Newsletter/Detail";
+import ProtectedRoutes from "../middlewares/ProtectedRoute";
+import Guest from "../middlewares/Guest";
 
 export default function Router() {
 	return (
@@ -25,70 +25,17 @@ export default function Router() {
 					}
 				/>
 
-				{/* Route yang menggunakan Main layout */}
-				<Route path="/" element={<MainLayout />}>
-					<Route
-						path="/"
-						element={
-							<Authenticated>
-								<Home />
-							</Authenticated>
-						}
-					/>
-
-					<Route
-						path="/newsletters"
-						element={
-							<Authenticated>
-								<Newsletter />
-							</Authenticated>
-						}
-					/>
-
-					<Route
-						path="/newsletter-create"
-						element={
-							<Authenticated>
-								<Create />
-							</Authenticated>
-						}
-					/>
-
-					<Route
-						path="/edit-news/:id"
-						element={
-							<Authenticated>
-								<Edit />
-							</Authenticated>
-						}
-					/>
-
-					<Route
-						path="/detail-news/:id"
-						element={
-							<Authenticated>
-								<Detail />
-							</Authenticated>
-						}
-					/>
-
-					<Route
-						path="/users"
-						element={
-							<Authenticated>
-								<Users />
-							</Authenticated>
-						}
-					/>
-
-					<Route
-						path="/programs"
-						element={
-							<Authenticated>
-								<Programs />
-							</Authenticated>
-						}
-					/>
+				{/* Protected Routes */}
+				<Route path="/" element={<ProtectedRoutes />}>
+					<Route path="/" element={<MainLayout />}>
+						<Route path="/" element={<Home />} />
+						<Route path="/newsletters" element={<Newsletter />} />
+						<Route path="/newsletter-create" element={<Create />} />
+						<Route path="/edit-news/:id" element={<Edit />} />
+						<Route path="/detail-news/:id" element={<Detail />} />
+						<Route path="/users" element={<Users />} />
+						<Route path="/programs" element={<Programs />} />
+					</Route>
 				</Route>
 			</Routes>
 		</BrowserRouter>

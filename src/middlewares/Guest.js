@@ -2,7 +2,7 @@ import { useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 
-export default function Guests({ children }) {
+export default function Guest({ children }) {
 	const { auth } = useContext(AuthContext);
 	const redirect = useNavigate();
 

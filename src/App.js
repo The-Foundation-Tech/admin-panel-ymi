@@ -1,32 +1,11 @@
-import { useContext, useEffect, useState } from "react";
-import { AuthContext } from "./context/AuthContext";
-import Router from "./routes/routes";
-import axios from "axios";
+import { useEffect, useState } from "react";
 import { Toaster } from "react-hot-toast";
+import Router from "./routes/routes";
 
 export default function App() {
 	const [mounted, setMounted] = useState(false);
-	const { auth } = useContext(AuthContext);
 
-	const getAuth = async () => {
-		try {
-			const response = await axios.get("/get-auth");
-
-			auth.setIsLogin(true);
-			auth.setUser(response.data.user);
-		} catch (error) {
-			console.log(error);
-		}
-	};
-
-	useEffect(
-		() => {
-			getAuth();
-			setMounted(true);
-		},
-		[auth.isLogin],
-		mounted
-	);
+	useEffect(() => setMounted(true), [], mounted);
 
 	if (!mounted) {
 		return (
