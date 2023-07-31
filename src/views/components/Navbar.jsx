@@ -15,6 +15,7 @@ export default function Navbar({ open, setOpen }) {
 			localStorage.removeItem("user");
 
 			auth.setIsLogin(false);
+			auth.setUser(null);
 			redirect("/login");
 		} catch (error) {
 			console.log(error.message);
