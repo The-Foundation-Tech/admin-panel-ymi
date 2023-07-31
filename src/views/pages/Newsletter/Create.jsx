@@ -10,20 +10,31 @@ export default function Create() {
 	const {
 		register,
 		handleSubmit,
+		setValue,
 		reset,
 		formState: { errors },
 	} = useForm();
 	const editorRef = useRef(null);
 	const redirect = useNavigate();
 
+	const handleImage = (e) => {
+		const image = e.target.files[0];
+		setValue("image", image);
+	};
+
 	const store = async (data) => {
 		try {
-			if (editorRef.current) {
-				data.content = editorRef.current.getContent();
-				data.slug = editorRef.current.getContent();
-			}
+			if (editorRef.current) data.content = editorRef.current.getContent();
 
-			await axios.post("/newsletters", data);
+			const formData = new FormData();
+			formData.append("title", data.title);
+			formData.append("image", data.image[0]);
+			formData.append("content", data.content);
+
+			await axios.post("/newsletters", formData, {
+				headers: { "Content-Type": "multipart/form-data" },
+			});
+
 			reset();
 			toast.success("Berita berhasil ditambahkan");
 			redirect("/newsletters");
@@ -61,8 +72,10 @@ export default function Create() {
 						<label className="input-group input-group-vertical">
 							<input
 								type="file"
+								accept=".png, .jpg, .jpeg"
 								placeholder="Image"
 								className="input input-bordered"
+								onChange={handleImage}
 								{...register("image", { required: false })}
 							/>
 

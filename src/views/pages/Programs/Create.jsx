@@ -9,6 +9,7 @@ import InputError from "../../components/InputError";
 export default function Create() {
 	const {
 		register,
+		setValue,
 		reset,
 		handleSubmit,
 		formState: { errors },
@@ -16,9 +17,22 @@ export default function Create() {
 	const { programs, setPrograms } = useContext(ProgramsContext);
 	const [isOpen, setIsOpen] = useState(false);
 
+	const handleImage = (e) => {
+		const image = e.target.files[0];
+		setValue("image", image);
+	};
+
 	const store = async (data) => {
 		try {
-			const response = await axios.post("/programs", data);
+			const formData = new FormData();
+			formData.append("name", data.name);
+			formData.append("image", data.image[0]);
+			formData.append("link", data.link);
+
+			const response = await axios.post("/programs", formData, {
+				headers: { "Content-Type": "multipart/form-data" },
+			});
+
 			setPrograms([...programs, response.data]);
 			reset();
 			setIsOpen(!isOpen);
@@ -80,6 +94,8 @@ export default function Create() {
 						<input
 							type="file"
 							className="input input-bordered"
+							accept=".png, .jpg, .jpeg"
+							onChange={handleImage}
 							{...register("image", { required: false })}
 						/>
 
