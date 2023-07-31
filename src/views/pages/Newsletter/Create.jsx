@@ -4,9 +4,15 @@ import { Editor } from "@tinymce/tinymce-react";
 import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
+import InputError from "../../components/InputError";
 
 export default function Create() {
-	const { register, handleSubmit, reset } = useForm();
+	const {
+		register,
+		handleSubmit,
+		reset,
+		formState: { errors },
+	} = useForm();
 	const editorRef = useRef(null);
 	const redirect = useNavigate();
 
@@ -39,8 +45,12 @@ export default function Create() {
 								type="text"
 								placeholder="Judul berita"
 								className="input input-bordered"
-								{...register("title", { required: true })}
+								{...register("title", {
+									required: "Judul berita tidak boleh kosong",
+								})}
 							/>
+
+							<InputError errors={errors} name={"title"} />
 						</label>
 					</div>
 
@@ -55,20 +65,8 @@ export default function Create() {
 								className="input input-bordered"
 								{...register("image", { required: false })}
 							/>
-						</label>
-					</div>
 
-					<div className="form-control mb-3">
-						<label className="label">
-							<span className="label-text">Thumbnail</span>
-						</label>
-						<label className="input-group input-group-vertical">
-							<input
-								type="file"
-								placeholder="Thumbnail"
-								className="input input-bordered"
-								{...register("thumbnail", { required: false })}
-							/>
+							<InputError errors={errors} name={"image"} />
 						</label>
 					</div>
 

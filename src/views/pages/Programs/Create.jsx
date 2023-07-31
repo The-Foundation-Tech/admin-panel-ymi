@@ -4,9 +4,15 @@ import { useForm } from "react-hook-form";
 import { ProgramsContext } from "../../../context/ProgramsContext";
 import toast from "react-hot-toast";
 import Modals from "../../components/Modal";
+import InputError from "../../components/InputError";
 
 export default function Create() {
-	const { register, reset, handleSubmit } = useForm();
+	const {
+		register,
+		reset,
+		handleSubmit,
+		formState: { errors },
+	} = useForm();
 	const { programs, setPrograms } = useContext(ProgramsContext);
 	const [isOpen, setIsOpen] = useState(false);
 
@@ -41,8 +47,12 @@ export default function Create() {
 							type="text"
 							placeholder="Nama"
 							className="input input-bordered"
-							{...register("name", { required: true })}
+							{...register("name", {
+								required: "Nama program tidak boleh kosong",
+							})}
 						/>
+
+						<InputError errors={errors} name={"name"} />
 					</label>
 				</div>
 
@@ -57,6 +67,8 @@ export default function Create() {
 							className="input input-bordered"
 							{...register("link", { required: false })}
 						/>
+
+						<InputError errors={errors} name={"link"} />
 					</label>
 				</div>
 
@@ -70,6 +82,8 @@ export default function Create() {
 							className="input input-bordered"
 							{...register("image", { required: false })}
 						/>
+
+						<InputError errors={errors} name={"image"} />
 					</label>
 				</div>
 

@@ -4,9 +4,15 @@ import { useContext, useState } from "react";
 import axios from "axios";
 import { ProgramsContext } from "../../../context/ProgramsContext";
 import toast from "react-hot-toast";
+import InputError from "../../components/InputError";
 
 export default function Edit({ program }) {
-	const { register, handleSubmit, reset } = useForm();
+	const {
+		register,
+		handleSubmit,
+		reset,
+		formState: { errors },
+	} = useForm();
 	const { getPrograms } = useContext(ProgramsContext);
 	const [isOpen, setIsOpen] = useState(false);
 
@@ -30,7 +36,7 @@ export default function Edit({ program }) {
 				style={`px-4 py-1 bg-green-500 rounded text-white`}
 				btnTitle={"Edit"}
 				modalId={`Edit`}
-				modalTitle={"Edit User"}
+				modalTitle={"Edit Program"}
 			>
 				<form onSubmit={handleSubmit(update)}>
 					<div className="form-control mb-3">
@@ -43,8 +49,12 @@ export default function Edit({ program }) {
 								placeholder="Nama"
 								className="input input-bordered"
 								defaultValue={program.name}
-								{...register("name", { required: false })}
+								{...register("name", {
+									required: "Nama program tidak boleh kosong",
+								})}
 							/>
+
+							<InputError errors={errors} name={"name"} />
 						</label>
 					</div>
 
@@ -60,6 +70,8 @@ export default function Edit({ program }) {
 								defaultValue={program.link}
 								{...register("link", { required: true })}
 							/>
+
+							<InputError errors={errors} name={"link"} />
 						</label>
 					</div>
 
@@ -74,6 +86,8 @@ export default function Edit({ program }) {
 								className="input input-bordered"
 								{...register("image", { required: false })}
 							/>
+
+							<InputError errors={errors} name={"image"} />
 						</label>
 					</div>
 

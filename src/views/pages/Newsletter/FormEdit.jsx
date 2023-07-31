@@ -4,10 +4,15 @@ import { Editor } from "@tinymce/tinymce-react";
 import { useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-hot-toast";
+import InputError from "../../components/InputError";
 
 export default function FormEdit() {
 	const [news, setNews] = useState(null);
-	const { register, handleSubmit } = useForm();
+	const {
+		register,
+		handleSubmit,
+		formState: { errors },
+	} = useForm();
 	const { id } = useParams();
 
 	const editorRef = useRef(null);
@@ -51,9 +56,13 @@ export default function FormEdit() {
 						type="text"
 						placeholder="Judul berita"
 						className="input input-bordered"
-						{...register("title", { required: true })}
+						{...register("title", {
+							required: "Judul berita tidak boleh kosong",
+						})}
 						defaultValue={news?.title}
 					/>
+
+					<InputError errors={errors} name={"title"} />
 				</label>
 			</div>
 

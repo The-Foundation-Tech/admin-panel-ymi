@@ -4,10 +4,16 @@ import { useForm } from "react-hook-form";
 import { UsersContext } from "../../../context/UsersContext";
 import { toast } from "react-hot-toast";
 import Modals from "../../components/Modal";
+import InputError from "../../components/InputError";
 
 export default function Create() {
 	const [isOpen, setIsOpen] = useState(false);
-	const { register, reset, handleSubmit } = useForm();
+	const {
+		register,
+		reset,
+		handleSubmit,
+		formState: { errors },
+	} = useForm();
 	const { users, setUsers } = useContext(UsersContext);
 
 	const store = async (data) => {
@@ -41,8 +47,12 @@ export default function Create() {
 							type="text"
 							placeholder="Nama"
 							className="input input-bordered"
-							{...register("name", { required: true })}
+							{...register("name", {
+								required: "Nama tidak boleh kosong",
+							})}
 						/>
+
+						<InputError errors={errors} name={"name"} />
 					</label>
 				</div>
 
@@ -55,8 +65,12 @@ export default function Create() {
 							type="text"
 							placeholder="Nama pengguna"
 							className="input input-bordered"
-							{...register("username", { required: true })}
+							{...register("username", {
+								required: "Nama pengguna tidak boleh kosong",
+							})}
 						/>
+
+						<InputError errors={errors} name={"username"} />
 					</label>
 				</div>
 
@@ -69,8 +83,12 @@ export default function Create() {
 							type="password"
 							placeholder="Password"
 							className="input input-bordered"
-							{...register("password", { required: true })}
+							{...register("password", {
+								required: "Password tidak boleh kosong",
+							})}
 						/>
+
+						<InputError errors={errors} name={"password"} />
 					</label>
 				</div>
 

@@ -4,9 +4,15 @@ import Modals from "../../components/Modal";
 import { useContext, useState } from "react";
 import { UsersContext } from "../../../context/UsersContext";
 import toast from "react-hot-toast";
+import InputError from "../../components/InputError";
 
 export default function Edit({ user }) {
-	const { register, handleSubmit, reset } = useForm();
+	const {
+		register,
+		handleSubmit,
+		reset,
+		formState: { errors },
+	} = useForm();
 	const { getUsers } = useContext(UsersContext);
 	const [isOpen, setIsOpen] = useState(false);
 
@@ -43,8 +49,12 @@ export default function Edit({ user }) {
 							placeholder="Nama"
 							className="input input-bordered"
 							defaultValue={user.name}
-							{...register("name", { required: false })}
+							{...register("name", {
+								required: "Nama tidak boleh kosong",
+							})}
 						/>
+
+						<InputError errors={errors} name={"name"} />
 					</label>
 				</div>
 
@@ -58,8 +68,12 @@ export default function Edit({ user }) {
 							placeholder="Nama pengguna"
 							className="input input-bordered"
 							defaultValue={user.username}
-							{...register("username", { required: true })}
+							{...register("username", {
+								required: "Nama pengguna tidak boleh kosong",
+							})}
 						/>
+
+						<InputError errors={errors} name={"username"} />
 					</label>
 				</div>
 

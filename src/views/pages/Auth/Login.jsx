@@ -1,11 +1,19 @@
 import axios from "axios";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
+import { ErrorMessage } from "@hookform/error-message";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../../context/AuthContext";
+import Alert from "../../components/Alert";
+import InputError from "../../components/InputError";
 
 export default function Login() {
-	const { register, handleSubmit } = useForm();
+	const {
+		register,
+		handleSubmit,
+		formState: { errors },
+	} = useForm();
+	const [error, setError] = useState(undefined);
 	const { auth } = useContext(AuthContext);
 	const redirect = useNavigate();
 
@@ -19,7 +27,7 @@ export default function Login() {
 			auth.setIsLogin(true);
 			redirect("/");
 		} catch (error) {
-			console.log(error.response.data.message);
+			setError(error.response?.data?.message);
 		}
 	};
 
@@ -30,6 +38,8 @@ export default function Login() {
 					<h2 className="text-center text-3xl mb-3">Login</h2>
 
 					<div className="card-actions">
+						{error && <Alert.AlertError message={error} />}
+
 						<form onSubmit={handleSubmit(login)} className="w-full">
 							<div className="form-control mb-3">
 								<label className="label">
@@ -40,9 +50,13 @@ export default function Login() {
 										type="text"
 										placeholder="Pilih nama pengguna"
 										className="input input-bordered"
-										{...register("username", { required: true })}
+										{...register("username", {
+											required: "Username tidak boleh kosong",
+										})}
 									/>
 								</label>
+
+								<InputError errors={errors} name={"username"} />
 							</div>
 
 							<div className="form-control mb-8">
@@ -54,8 +68,12 @@ export default function Login() {
 										type="password"
 										placeholder="Password"
 										className="input input-bordered"
-										{...register("password", { required: true })}
+										{...register("password", {
+											required: "Password tidak boleh kosong",
+										})}
 									/>
+
+									<InputError errors={errors} name={"password"} />
 								</label>
 							</div>
 
